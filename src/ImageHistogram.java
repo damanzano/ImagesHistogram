@@ -118,12 +118,13 @@ public class ImageHistogram extends PApplet{
 		}
 		return -1;
 	}
+	
 	public void drawHistogram(int[] histogram, int x, int y, int color){
 		int histMax = max(histogram);
 		 stroke(color);
 		for (int i = 0; i < histogram.length; i ++) {
 			  int bar = (int)map(histogram[i], 0, histMax, y+200, y);
-			  line(i+x, y+200, i+x, bar);
+			  line(x+(2*i), y+200, x+(2*i), bar);
 			}
 	}
 	
