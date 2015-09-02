@@ -32,8 +32,6 @@ public class ImageHistogram extends PApplet {
 		resImage3.save("../results/result3.jpg");
 		resImage4.save("../results/result4.jpg");
 
-		System.out.println(Arrays.toString(ColorSpace.RGBToYxy(0, 0, 0)));
-		System.out.println(Arrays.toString(ColorSpace.RGBToYxy(255, 255, 255)));
 	}
 
 	public void draw() {
@@ -44,6 +42,14 @@ public class ImageHistogram extends PApplet {
 		image(resImage2, (2 * image.width) + image2.width, 0);
 		image(resImage3, (2 * image.width) + (2*image2.width), 0);
 		image(resImage4, (3 * image.width) + (2*image2.width), 0);
+		
+		// Draw image labels
+		text("Image 1", 0, 10);
+		text("Image 2", image.width, 10);
+		text("Image 1 to Image 2 RGB", image.width + image2.width, 10);
+		text("Image 2 to Image 1 RGB", (2 * image.width) + image2.width, 10);
+		text("Image 1 to Image 2 Yxy", (2 * image.width) + (2*image2.width), 10);
+		text("Image 2 to Image 1 Yxy", (3 * image.width) + (2*image2.width), 10);
 
 		// Red histograms
 		// drawHistogram(imagehist.get(0), 0, max(image.height,image2.height),
@@ -51,9 +57,9 @@ public class ImageHistogram extends PApplet {
 		// drawHistogram(image2hist.get(0), image.width,
 		// max(image.height,image2.height), color(255, 0, 0));
 		drawHistogram(imagehist.get(3), 0, max(image.height, image2.height),
-				color(255, 0, 0));
+				color(255, 0, 0), "Image 1 red Hist");
 		drawHistogram(image2hist.get(3), image.width,
-				max(image.height, image2.height), color(255, 0, 0));
+				max(image.height, image2.height), color(255, 0, 0), "Image 2 red Hist");
 		
 		// Y histograms
 		// drawHistogram(imagehist.get(6), 0, max(image.height,image2.height),
@@ -61,9 +67,9 @@ public class ImageHistogram extends PApplet {
 		// drawHistogram(image2hist.get(6), image.width,
 		// max(image.height,image2.height), color(255, 0, 0));
 		drawHistogram(imagehist.get(9), 2*image.width, max(image.height, image2.height),
-				color(255, 255, 255));
+				color(255, 255, 255), "Image 1 Y Hist");
 		drawHistogram(image2hist.get(9), 3*image.width,
-				max(image.height, image2.height), color(255, 255, 255));
+				max(image.height, image2.height), color(255, 255, 255), "Image 2 Y Hist");
 		
 
 		// Green histograms
@@ -72,9 +78,9 @@ public class ImageHistogram extends PApplet {
 		// drawHistogram(image2hist.get(1), image.width,
 		// max(image.height,image2.height)+200, color(0, 255, 0));
 		drawHistogram(imagehist.get(4), 0,
-				max(image.height, image2.height) + 200, color(0, 255, 0));
+				max(image.height, image2.height) + 200, color(0, 255, 0), "Image 1 green Hist");
 		drawHistogram(image2hist.get(4), image.width,
-				max(image.height, image2.height) + 200, color(0, 255, 0));
+				max(image.height, image2.height) + 200, color(0, 255, 0), "Image 2 green Hist");
 		
 		// x histograms
 		// drawHistogram(imagehist.get(7), 0, max(image.height,image2.height),
@@ -82,9 +88,9 @@ public class ImageHistogram extends PApplet {
 		// drawHistogram(image2hist.get(7), image.width,
 		// max(image.height,image2.height), color(255, 0, 0));
 		drawHistogram(imagehist.get(10), 2*image.width, max(image.height, image2.height) + 200,
-				color(255, 255, 255));
+				color(255, 255, 255), "Image 1 x Hist");
 		drawHistogram(image2hist.get(10), 3*image.width,
-				max(image.height, image2.height) + 200, color(255, 255, 255));
+				max(image.height, image2.height) + 200, color(255, 255, 255), "Image 2 x Hist");
 
 		// Blue histograms
 		// drawHistogram(imagehist.get(2), 0,
@@ -92,9 +98,9 @@ public class ImageHistogram extends PApplet {
 		// drawHistogram(image2hist.get(2), image.width,
 		// max(image.height,image2.height)+400, color(0, 0, 255));
 		drawHistogram(imagehist.get(5), 0,
-				max(image.height, image2.height) + 400, color(0, 0, 255));
+				max(image.height, image2.height) + 400, color(0, 0, 255), "Image 1 blue Hist");
 		drawHistogram(image2hist.get(5), image.width,
-				max(image.height, image2.height) + 400, color(0, 0, 255));
+				max(image.height, image2.height) + 400, color(0, 0, 255), "Image 2 blue Hist");
 		
 		// y histograms
 		// drawHistogram(imagehist.get(8), 0, max(image.height,image2.height),
@@ -102,9 +108,9 @@ public class ImageHistogram extends PApplet {
 		// drawHistogram(image2hist.get(8), image.width,
 		// max(image.height,image2.height), color(255, 0, 0));
 		drawHistogram(imagehist.get(11), 2*image.width, max(image.height, image2.height) + 400,
-				color(255, 255, 255));
+				color(255, 255, 255), "Image 1 y Hist");
 		drawHistogram(image2hist.get(11), 3*image.width,
-				max(image.height, image2.height) + 400, color(255, 255, 255));
+				max(image.height, image2.height) + 400, color(255, 255, 255), "Image 2 y Hist");
 	}
 
 	public ArrayList<float[]> colorHistograms(PImage image) {
@@ -281,30 +287,36 @@ public class ImageHistogram extends PApplet {
 			
 			// Convert it to Yxy
 			float[] Yxy = ColorSpace.RGBToYxy(tRed, tGreen, tBlue);
+			//System.out.println("RGB ["+tRed+","+tGreen+","+tBlue+"] = Yxy"+Arrays.toString(Yxy));
 			
 			// Map the Yxy value to index
 			int Yi = (int) map(Yxy[0], 0, 0.9994f, 0, 99);
 			int xi = (int) map(Yxy[1], 0, 1, 0, 99);
 			int yi = (int) map(Yxy[2], 0, 1, 0, 99);
+			//System.out.println("Target histogram Indexes Yxy["+Yi+","+xi+","+yi+"]");
 			
 			// Get the Yxy value in target Yxy accumulative histogram
 			float tYValue = targetHists.get(9)[Yi];
 			float txValue = targetHists.get(10)[xi];
 			float tyValue = targetHists.get(11)[yi];
+			//System.out.println("Accumulated target values Yxy["+tYValue+","+txValue+","+tyValue+"]");
 			
 
-			// Search the index for target value in the base's Yxy histograms
+			// Search the index for the target value in the base's Yxy histograms
 			Yi = getValueIndex(tYValue, baseHists.get(9));
 			xi = getValueIndex(txValue, baseHists.get(10));
 			yi = getValueIndex(tyValue, baseHists.get(11));
+			//System.out.println("Base histogram Indexes Yxy["+Yi+","+xi+","+yi+"]");
 			
 			// Map the index to a Yxy value
-			float bYValue = (int) map(Yi, 0, 99, 0, 0.9994f);
-			float bxValue = (int) map(xi, 0, 99, 0, 1);
-			float byValue = (int) map(yi, 0, 99, 0, 1);
+			float bYValue = map(Yi, 0, 99, 0, 0.9994f);
+			float bxValue = map(xi, 0, 99, 0, 1);
+			float byValue = map(yi, 0, 99, 0, 1);
+			//System.out.println("Base values Yxy["+bYValue+","+bxValue+","+byValue+"]");
 			
 			// Convert it to RGB
 			float[] RGB = ColorSpace.YxyToRGB(bYValue, bxValue, byValue);
+			//System.out.println("Yxy ("+bYValue+","+bxValue+","+byValue+"= RGB"+Arrays.toString(RGB));
 
 			// Update de result image
 			resImage.pixels[i] = color(RGB[0], RGB[1], RGB[2]);
@@ -337,13 +349,16 @@ public class ImageHistogram extends PApplet {
 		return mindiffPos;
 	}
 
-	public void drawHistogram(float[] histogram, int x, int y, int color) {
+	public void drawHistogram(float[] histogram, int x, int y, int color, String name) {
 		float histMax = max(histogram);
 		stroke(color);
 		for (int i = 0; i < histogram.length; i++) {
 			int bar = (int) map(histogram[i], 0, histMax, y + 200, y);
 			line(x + (2 * i), y + 200, x + (2 * i), bar);
 		}
+		
+		// Draw the label in the upper left corner
+		text(name, x, y+10);
 	}
 
 	
