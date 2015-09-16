@@ -25,8 +25,8 @@ public class ImageHistogram extends PApplet {
 		image2hist = colorHistograms(image2);
 		resImage = colorTransferAHRGB(image, imagehist, image2, image2hist);
 		resImage2 = colorTransferAHRGB(image2, image2hist, image, imagehist);
-		resImage3 = colorTransferAHYXy(image, imagehist, image2, image2hist);
-		resImage4 = colorTransferAHYXy(image2, image2hist, image, imagehist);
+		resImage3 = colorTransferAHYXy2(image, imagehist, image2, image2hist);
+		resImage4 = colorTransferAHYXy2(image2, image2hist, image, imagehist);
 		resImage.save("../results/result.jpg");
 		resImage2.save("../results/result2.jpg");
 		resImage3.save("../results/result3.jpg");
@@ -316,6 +316,46 @@ public class ImageHistogram extends PApplet {
 			
 			// Convert it to RGB
 			float[] RGB = ColorSpace.YxyToRGB(bYValue, bxValue, byValue);
+			//System.out.println("Yxy ("+bYValue+","+bxValue+","+byValue+"= RGB"+Arrays.toString(RGB));
+
+			// Update de result image
+			resImage.pixels[i] = color(RGB[0], RGB[1], RGB[2]);
+
+		}
+		resImage.updatePixels();
+
+		return resImage;
+	}
+	
+	public PImage colorTransferAHYXy2(PImage base, ArrayList<float[]> baseHists,
+			PImage target, ArrayList<float[]> targetHists) {
+		PImage resImage = createImage(target.width, target.height, RGB);
+		resImage.loadPixels();
+		for (int i = 0; i < resImage.pixels.length; i++) {
+			// Get RGB values in target's image
+			int tColor = target.pixels[i];
+			float tRed = red(tColor);
+			float tBlue = blue(tColor);
+			float tGreen = green(tColor);
+			
+			// Convert it to Yxy
+			float[] Yxy = ColorSpace.RGBToYxy(tRed, tGreen, tBlue);
+			//System.out.println("RGB ["+tRed+","+tGreen+","+tBlue+"] = Yxy"+Arrays.toString(Yxy));
+			
+			// Map the Yxy value to index
+			int Yi = (int) map(Yxy[0], 0, 0.9994f, 0, 99);
+			
+			// Get the Yxy value in target Yxy accumulative histogram
+			float tYValue = targetHists.get(9)[Yi];
+
+			// Search the index for the target value in the base's Yxy histograms
+			Yi = getValueIndex(tYValue, baseHists.get(9));
+			
+			// Map the index to a Yxy value
+			float bYValue = map(Yi, 0, 99, 0, 0.9994f);
+						
+			// Convert it to RGB
+			float[] RGB = ColorSpace.YxyToRGB(bYValue, Yxy[1], Yxy[2]);
 			//System.out.println("Yxy ("+bYValue+","+bxValue+","+byValue+"= RGB"+Arrays.toString(RGB));
 
 			// Update de result image
