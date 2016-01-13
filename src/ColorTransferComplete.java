@@ -4,7 +4,7 @@ import java.util.Arrays;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-public class ImageHistogram extends PApplet {
+public class ColorTransferComplete extends PApplet {
 	PImage image;
 	PImage image2;
 	ArrayList<float[]> imagehist;
